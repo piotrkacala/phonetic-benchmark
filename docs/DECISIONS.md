@@ -8,7 +8,7 @@ It is not a backlog.
 It is a record of choices that should prevent the benchmark from drifting over time.
 
 Current benchmark version:
-- `v1`
+- `v2`
 
 ## Decision 1: Baseline Repository Scope Is Docs And Data Only
 
@@ -105,7 +105,7 @@ Status:
 - accepted
 
 Decision:
-- benchmark `v1` supports exactly two phonetic alphabets:
+- benchmark `v2` supports exactly two phonetic alphabets:
   - Polish
   - NATO
 
@@ -115,7 +115,7 @@ Why:
 
 Implications:
 - adding more alphabets would require a benchmark-version change
-- evaluation should not expect broader dataset support in `v1`
+- evaluation should not expect broader dataset support in `v2`
 
 ## Decision 7: The Interface Must Support Polish And English
 
@@ -292,6 +292,8 @@ Status:
 Decision:
 - benchmark runs must start from a repository under git with a known baseline commit
 - the model is not required to create commits during the run
+- the model is allowed and encouraged to create a final local commit when its environment supports
+  that workflow
 
 Why:
 - reviewers need a stable baseline and inspectable final diff
@@ -300,6 +302,10 @@ Why:
 Implications:
 - final repository state is required evidence
 - commit history is optional evidence
+- if no final commit is created, the submission should record that fact in
+  `docs/ai/IMPLEMENTATION_REPORT.md`
+- implementation models should not push commits to remotes unless the operator explicitly asks them
+  to do so
 
 ## Decision 17: Manual Fresh-Window Handoffs Are Allowed
 
@@ -379,6 +385,74 @@ Implications:
 - review should not penalize a run for using English-language operator prompts
 - application-localization requirements remain governed by `docs/REQUIREMENTS.md`
 
+## Decision 21: Submissions Must Include Durable Review Artifacts
+
+Status:
+- accepted
+
+Decision:
+- every completed submission must include a `README.md`
+- every completed submission must include `docs/ai/IMPLEMENTATION_REPORT.md`
+- those artifacts must make install, run, verification, model identity, open decisions, and process
+  evidence inspectable from the repository
+
+Why:
+- chat history is often inaccessible or incomplete during review
+- previous implementation runs showed that models often omit durable process notes unless the
+  repository contract asks for them explicitly
+- the benchmark should compare implementation output from repository evidence, not hidden context
+
+Implications:
+- missing or materially incomplete submission artifacts are contract failures
+- documentation and process quality can still distinguish stronger and weaker artifacts after the
+  baseline artifact contract is met
+
+## Decision 22: Runtime Settings Should Be Recorded When Visible
+
+Status:
+- accepted
+
+Decision:
+- submissions must record the implementing model name and version
+- submissions must record provider or interface information when visible
+- submissions must record effort, reasoning, temperature, sampling, or similar runtime settings when
+  visible to the implementation model
+- unavailable settings must be recorded as `not exposed by interface` rather than guessed
+
+Why:
+- provider and runtime settings may materially affect behavior
+- some model interfaces expose those settings and others do not
+- guessing settings would make the artifact less reliable than explicitly marking them unavailable
+
+Implications:
+- reviewers can distinguish known run configuration from unavailable configuration
+- models are not penalized for settings they cannot inspect, but they must not invent them
+
+## Decision 23: Submission Evidence Must Match The Delivered Application
+
+Status:
+- accepted
+
+Decision:
+- the implementation date shown in attribution must be a fixed date for the benchmark run
+- the implementation date must not be generated dynamically at runtime, application startup, or
+  build time
+- documented decisions for open product questions must match the implemented UI behavior
+- if a test command is documented, it must complete successfully in the submitted repository
+
+Why:
+- previous implementation runs repeatedly produced runtime-generated attribution dates instead of
+  preserved implementation dates
+- some submissions documented behavior that differed from the delivered UI
+- optional tests should remain optional, but a declared verification command must be truthful and
+  runnable
+
+Implications:
+- models still choose how to close open product questions
+- tests remain a quality signal rather than a universal hard requirement
+- incorrect attribution dates, mismatched decision notes, and broken declared test workflows are
+  contract failures
+
 ## Currently Open
 
 The following topics remain intentionally open in the current benchmark version:
@@ -387,3 +461,4 @@ The following topics remain intentionally open in the current benchmark version:
 
 These are not accepted decisions yet.
 Implementations may close them, but the benchmark package has not frozen them globally.
+Submissions must record how they closed these questions in repository artifacts.

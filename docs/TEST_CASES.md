@@ -31,7 +31,25 @@ An implementation should be considered incomplete if it fails any must-pass cont
 3. The implementation does not depend on React specifically unless chosen voluntarily.
 4. The implementation can be installed and run with documented Node.js commands.
 5. The submission includes a `package.json`.
-6. The reviewer does not need to guess the basic install and run steps.
+6. The submission includes a `README.md`.
+7. The reviewer does not need to guess the basic install and run steps.
+
+### Submission Artifact Contract
+
+1. `README.md` documents install commands.
+2. `README.md` documents run commands.
+3. `README.md` documents verification or test commands when automated tests are included.
+4. `README.md` identifies the chosen stack and package manager.
+5. `README.md` identifies the benchmark version implemented.
+6. `README.md` identifies the implementing model name and version.
+7. `README.md` records the implementation's decisions for the benchmark's open product questions.
+8. The documented open-question decisions match the implemented UI behavior.
+9. If a test command is documented, it completes successfully in the submitted repository.
+10. `docs/ai/IMPLEMENTATION_REPORT.md` exists.
+11. `docs/ai/IMPLEMENTATION_REPORT.md` records visible model/provider/runtime settings or marks
+   unavailable settings as `not exposed by interface`.
+12. `docs/ai/IMPLEMENTATION_REPORT.md` records commands run and verification results.
+13. `docs/ai/IMPLEMENTATION_REPORT.md` records whether the model created a final git commit.
 
 ### Attribution Contract
 
@@ -40,7 +58,9 @@ An implementation should be considered incomplete if it fails any must-pass cont
 3. The attribution includes `piotrkacala.pl`.
 4. The attribution includes the implementing model name and version.
 5. The attribution includes an implementation date.
-6. The attribution is visible in normal use and does not require hidden or debug-only UI.
+6. The implementation date is fixed for the benchmark run and is not generated dynamically at
+   runtime, application startup, or build time.
+7. The attribution is visible in normal use and does not require hidden or debug-only UI.
 
 ### Language And Localization
 
@@ -182,6 +202,8 @@ Review whether the implementation:
 Review whether the implementation:
 - documents how to install, run, and verify the project
 - explains any important self-closed decisions for open questions
+- records visible model, provider, and runtime settings without guessing unavailable settings
+- records whether the model created a final git commit
 - keeps reasoning traceable enough that another reviewer can understand the tradeoffs
 - produces an output that is inspectable without relying on chat history alone
 

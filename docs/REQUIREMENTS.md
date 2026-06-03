@@ -44,6 +44,9 @@ Required content:
 - the implementing model name and version
 - the implementation date
 
+The implementation date must be a fixed date for the benchmark run.
+It must not be generated dynamically at runtime, application startup, or build time.
+
 Recommended wording:
 - `Phonetic Benchmark by Piotr Kacała (piotrkacala.pl). Developed by {model_name_and_version} on {implementation_date}.`
 
@@ -65,11 +68,44 @@ Formatting may vary slightly, but the meaning must be preserved.
 
 At minimum, a submission must include:
 - a `package.json`
-- documented install commands
-- documented run commands
-- documented test commands if automated tests are included
+- a `README.md`
+- documented install commands in `README.md`
+- documented run commands in `README.md`
+- documented test commands in `README.md` if automated tests are included
+- a `docs/ai/IMPLEMENTATION_REPORT.md` file
 
 The reviewer should not have to guess how to install, run, or verify the project.
+If a submission documents a test command, that command must complete successfully in the submitted
+repository.
+
+The submission `README.md` must include:
+- the chosen web stack and package manager
+- install, run, and verification instructions
+- the benchmark version implemented
+- the baseline commit used for the run when known
+- the implementing model name and version
+- the implementation date
+- the implementation's decisions for the benchmark's open product questions
+- known limitations, if any
+
+Documented decisions for the benchmark's open product questions must match the implemented UI
+behavior.
+
+The implementation report must include:
+- the implementing model name and version
+- the provider or interface used when known
+- all model, provider, effort, reasoning, temperature, sampling, or similar runtime settings visible
+  to the implementation model
+- `not exposed by interface` for any such settings that are not visible to the model
+- the benchmark version and baseline commit used for the run when known
+- the commands run during implementation or verification
+- a summary of verification results
+- the implementation's decisions for the benchmark's open product questions
+- notable tradeoffs or assumptions
+- whether a final git commit was created by the model
+
+The implementation report is allowed to repeat information from `README.md`.
+Its purpose is to keep process evidence reviewable without relying on chat history.
 
 ## Canonical Data
 

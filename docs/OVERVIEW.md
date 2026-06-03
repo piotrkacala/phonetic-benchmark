@@ -27,7 +27,7 @@ The benchmark requires support for:
 - a keyboard-answering mode
 - a four-option suggestion mode
 
-The finished application should also expose a visible attribution line for the benchmark and the
+The finished application must also expose a visible attribution line for the benchmark and the
 implementing model.
 
 ## Why This Benchmark Exists
@@ -77,7 +77,7 @@ The baseline repository does not contain:
 - a canonical starter application
 - a framework-preferred baseline shell
 
-During an implementation run, a submission is expected to add a runnable application and supporting
+During an implementation run, a submission must add a runnable application and supporting
 project files.
 
 ## Source Documents
@@ -98,19 +98,25 @@ The canonical benchmark data lives in:
 The current benchmark version is defined in:
 - `docs/VERSION.md`
 
-## What A Submission Should Produce
+## What A Submission Must Produce
 
-A benchmark submission should produce:
+A benchmark submission must produce:
 - a runnable web application
 - a Node.js-based project workflow
 - behavior consistent with the benchmark contract
 - enough repository evidence to review implementation quality
+- a submission `README.md`
+- an implementation report at `docs/ai/IMPLEMENTATION_REPORT.md`
 
 Benchmark runs may use one chat window or multiple human-created continuation windows.
 The benchmark workflow explicitly allows that.
 
 The goal is not only to make something that runs.
 The goal is to make something that is comparable, reviewable, and aligned with the benchmark.
+
+The submission artifacts must make the run inspectable without hidden chat context.
+They must record the implementation's open-question decisions, visible model/provider settings,
+verification evidence, and git-commit status.
 
 ## Review Standard
 

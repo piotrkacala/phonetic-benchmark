@@ -24,11 +24,13 @@ Why this matters:
 
 The docs-only baseline is not a refusal condition.
 
-When the current task is an implementation run, the model should:
+When the current task is an implementation run, the model must:
 - add a runnable browser-based application
 - add the Node.js project workflow needed to install and run it
 - add tests or verification artifacts when appropriate
 - preserve the benchmark docs and canonical data as the source of truth
+- add submission documentation in `README.md`
+- add an implementation report at `docs/ai/IMPLEMENTATION_REPORT.md`
 
 The rule against a canonical starter shell applies to the shared baseline package.
 It does not prohibit implementation code in benchmark submissions.
@@ -43,6 +45,7 @@ Hard requirement:
 Recommended:
 - keep the implementation history if it is convenient in the chosen tool
 - use logical commits when the workflow supports them cleanly
+- create a final implementation commit when the environment allows it
 
 Not required:
 - the model does not have to create commits during the run
@@ -56,6 +59,16 @@ Reasoning:
 Review implication:
 - final repository state is mandatory evidence
 - commit history is optional evidence
+- if the model creates a commit, that commit should not be pushed to a remote unless the operator
+  explicitly asks for it
+- if the model does not create a commit, the implementation report should say so
+
+Allowed git actions:
+- inspect status and diffs
+- stage implementation changes
+- create local commits
+
+The model should avoid destructive git actions unless explicitly instructed by the operator.
 
 ## Prompt Policy
 
@@ -89,6 +102,20 @@ It should include:
 - any practical runtime context needed to work in the repo
 
 It should not restate the entire benchmark in chat if the repository already contains it.
+
+Suggested first prompt:
+
+```text
+Read AGENTS.md first, then read the benchmark documents in docs/ and the data in benchmark-data/.
+
+Implement the Phonetic Benchmark v2 web application as a complete submission in this repository.
+Add the runnable Node.js-based application, package workflow, README.md, and
+docs/ai/IMPLEMENTATION_REPORT.md required by the benchmark.
+
+Record your decisions for the open product questions, visible model/provider/runtime settings, and
+verification results in repository artifacts. Create a final local git commit if your environment
+supports it, but do not push to a remote.
+```
 
 ## Fresh-Window Handoff Policy
 
@@ -128,10 +155,22 @@ possible.
 Examples:
 - changed code
 - run instructions
-- notes in docs
+- notes in `README.md`
+- `docs/ai/IMPLEMENTATION_REPORT.md`
 - task or summary files if the workflow chooses to create them
 
 This reduces dependence on one model's hidden chat memory.
+
+## Submission Artifact Policy
+
+Every completed implementation run must leave:
+- `README.md` with install, run, verification, stack, model, date, benchmark version, and open
+  decision notes
+- `docs/ai/IMPLEMENTATION_REPORT.md` with process evidence, visible model/provider settings,
+  verification results, open decisions, and git-commit status
+
+If a model cannot see a provider or runtime setting, it should write `not exposed by interface`
+instead of guessing.
 
 ## Fairness Principle
 

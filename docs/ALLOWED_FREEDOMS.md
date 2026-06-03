@@ -120,6 +120,13 @@ Examples of risky extras:
 
 ## Documentation Expectation
 
-If an implementation makes a non-trivial choice in an open area, it should document that choice in
+If an implementation makes a non-trivial choice in an open area, it must document that choice in
 repository artifacts.
+
+The implementation must explicitly document its decisions for:
+- reset behavior during or after a run
+- whether interface-language switching is allowed during an active run
+
+Those decisions should appear in `README.md` or `docs/ai/IMPLEMENTATION_REPORT.md`.
+They must match the implemented UI behavior.
 The benchmark should remain reviewable without depending on chat history alone.

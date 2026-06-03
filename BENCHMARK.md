@@ -34,12 +34,13 @@ The purpose is not to declare a universal winner. The purpose is to observe mean
 
 ## Repository Role
 
-This repo will contain:
+This repo contains:
 
 - benchmark documents describing the product and expected behavior
 - benchmark data describing the phonetic alphabets and other stable fixtures
 - workflow instructions for running the benchmark
 - evaluation criteria for comparing outputs across models
+- submission-artifact requirements for completed implementation runs
 
 The baseline repository does not ship a canonical starter implementation shell.
 During a benchmark run, an implementation model is expected to add its own runnable application
@@ -100,7 +101,7 @@ Current document set:
 - `docs/TEST_CASES.md`
 - `docs/DECISIONS.md`
 
-The current benchmark version is `v1`.
+The current benchmark version is `v2`.
 
 ## Benchmark Data
 

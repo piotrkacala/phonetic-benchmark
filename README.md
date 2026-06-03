@@ -28,6 +28,16 @@ That does not mean implementation agents should refuse the task.
 During an implementation run, the expected work is to add the application code, project workflow,
 and verification artifacts needed for a complete submission.
 
+## Submission Artifacts
+
+A completed benchmark submission must leave durable repository evidence, including:
+- a runnable Node.js-based application
+- a `README.md` with install, run, and verification instructions
+- a `docs/ai/IMPLEMENTATION_REPORT.md` file describing the implementation run
+- explicit notes for the implementation's decisions on the benchmark's open product questions
+- any model/provider/runtime settings visible to the implementation model
+- a fixed implementation date in visible attribution
+
 ## Canonical Data
 
 The canonical benchmark data currently lives in:

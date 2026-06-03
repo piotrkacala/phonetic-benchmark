@@ -108,6 +108,11 @@ Implementation-run rule:
 - the model is allowed and expected to add application code, package metadata, tests, and run
   instructions needed for a complete submission
 - this does not turn the baseline repository into a canonical starter app
+- the model must add a submission `README.md`
+- the model must add `docs/ai/IMPLEMENTATION_REPORT.md`
+- the model may create a final local git commit if the environment supports it
+- the model must record visible provider/runtime settings and write `not exposed by interface`
+  for settings it cannot inspect
 
 ## Operational Rule
 

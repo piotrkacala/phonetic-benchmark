@@ -98,6 +98,9 @@ Anchors:
 What to look for:
 - the repository shows how to install, run, and verify the project
 - important self-closed decisions are visible
+- `docs/ai/IMPLEMENTATION_REPORT.md` records process evidence
+- visible model/provider/runtime settings are recorded without guessing unavailable settings
+- final git commit status is recorded
 - docs or notes make key decisions inspectable
 - any available commit history or handoff artifacts are helpful, but not required
 - the reviewer can reconstruct what was done without hidden context

@@ -27,6 +27,8 @@ baseline contract.
 Primary evidence should come from:
 - the submitted repository
 - benchmark docs included in that repository
+- the submission `README.md`
+- `docs/ai/IMPLEMENTATION_REPORT.md`
 - automated test artifacts
 - documented run commands
 - the observable application behavior
@@ -72,6 +74,12 @@ Use this status when:
   benchmark contract
 - submission-contract evidence is incomplete, for example install, run, or test commands are not
   documented even though the reviewer can infer a working workflow from clear `package.json` scripts
+- required submission artifacts such as `README.md` or `docs/ai/IMPLEMENTATION_REPORT.md` are
+  missing or materially incomplete
+- a documented test command is present but does not complete successfully
+- documented decisions for open product questions do not match the implemented UI behavior
+- the required implementation date is generated dynamically rather than preserved as a fixed date
+  for the run
 
 ### Comparable
 
@@ -185,6 +193,8 @@ Low score:
 Review whether the implementation:
 - explains how to install, run, and verify the project
 - makes important self-closed decisions visible
+- records visible model, provider, and runtime settings, or explicitly marks them as unavailable
+- records whether a final git commit was created
 - leaves enough review trace to understand tradeoffs
 - keeps the submission inspectable without depending on hidden context
 - does not depend on inaccessible private prompt context to explain key decisions
@@ -198,12 +208,13 @@ Low score:
 ## Recommended Review Flow
 
 1. Read the submission's run instructions.
-2. Install and run the project using the documented Node.js workflow.
-3. Verify the contract behaviors from `docs/TEST_CASES.md`.
-4. Assign a contract-verification status.
-5. If the submission is comparable, assign `0-5` scores for each weighted dimension.
-6. Calculate the weighted total.
-7. Record notable strengths, weaknesses, and important self-closed decisions.
+2. Read `docs/ai/IMPLEMENTATION_REPORT.md`.
+3. Install and run the project using the documented Node.js workflow.
+4. Verify the contract behaviors from `docs/TEST_CASES.md`.
+5. Assign a contract-verification status.
+6. If the submission is comparable, assign `0-5` scores for each weighted dimension.
+7. Calculate the weighted total.
+8. Record notable strengths, weaknesses, and important self-closed decisions.
 
 ## Handling Open Questions
 
