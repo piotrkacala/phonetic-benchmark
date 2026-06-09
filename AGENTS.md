@@ -24,6 +24,7 @@ Read these first before making significant changes:
 - `agent-collaboration-defaults.md` — shared collaboration defaults for this repo
 - `BENCHMARK.md` — benchmark intent and framing
 - `workflow.md` — local workflow for maintaining and running the benchmark package
+- `docs/DEPENDENCY_SECURITY.md` — dependency and runner security policy
 - `benchmark-data/alphabets.json` — canonical alphabet data
 - `benchmark-data/multiple-choice-options.json` — canonical suggestion-mode option sets
 
@@ -75,6 +76,12 @@ If a benchmark runner or shell is introduced, document it here in the same chang
 - Do not add a canonical starter app to the baseline unless the benchmark version explicitly
   changes scope.
 - Keep the repo self-contained. Do not leave durable references to files outside this repository.
+- Treat dependency installation and project scripts as untrusted execution. Follow
+  `docs/DEPENDENCY_SECURITY.md` instead of adding ad hoc package-manager rules.
+- For implementation submissions, do not add `.npmrc`, non-registry dependency specs, or install
+  lifecycle scripts such as `preinstall`, `install`, `postinstall`, or `prepare`.
+- Use documented benchmark runner commands when available. Final evaluation reruns install, build,
+  test, and preview in a controlled environment.
 
 ## Quality Gates
 

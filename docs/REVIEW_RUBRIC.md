@@ -8,6 +8,7 @@ It is not the benchmark contract.
 The contract lives in:
 - `docs/REQUIREMENTS.md`
 - `docs/TEST_CASES.md`
+- `docs/DEPENDENCY_SECURITY.md`
 
 This rubric is used after contract verification, not instead of it.
 
@@ -19,6 +20,9 @@ This rubric is used after contract verification, not instead of it.
 3. Assign a `0-5` score in each review dimension.
 4. Use the anchor descriptions below as guidance, not as a fake precision system.
 5. Prefer repository evidence over reviewer taste.
+
+Dependency policy violations are contract-status issues first. Use the scoring guidance below only
+for submissions that remain eligible for comparative scoring.
 
 ## Scale
 
@@ -73,6 +77,11 @@ What to look for:
 - the chosen stack fits the benchmark size
 - data, logic, and UI are separated sensibly
 - randomness and state are handled in a reviewable way
+- dependency choices are necessary, understandable, and compliant with
+  `docs/DEPENDENCY_SECURITY.md`
+- dependency installation does not rely on unreviewable package sources, ad hoc installer commands,
+  or install lifecycle scripts
+- runner evidence supports reproducible install, build, test, and preview behavior
 
 Anchors:
 - `0`: the technical delivery is brittle, unclear, or barely functional
@@ -87,6 +96,8 @@ What to look for:
 - scoring, input handling, and both modes are covered
 - randomized behavior is tested without flaky assumptions
 - obvious regression risk is reduced
+- documented test commands run through the controlled runner when runner evaluation is available
+- test setup does not depend on undeclared packages or credentials outside the runner environment
 
 Anchors:
 - `0`: tests are absent, generic, or unrelated to the real benchmark
@@ -99,6 +110,8 @@ What to look for:
 - the repository shows how to install, run, and verify the project
 - important self-closed decisions are visible
 - `docs/ai/IMPLEMENTATION_REPORT.md` records process evidence
+- runner output is summarized or referenced when the controlled runner is available
+- dependency, registry, package-manager, or network assumptions are documented when relevant
 - visible model/provider/runtime settings are recorded without guessing unavailable settings
 - final git commit status is recorded
 - docs or notes make key decisions inspectable
@@ -130,6 +143,7 @@ At minimum, a completed review should record:
 - contract-verification status
 - per-dimension scores
 - weighted total if used
+- runner result or runner-evidence gap
 - main strengths
 - main weaknesses
 - notable self-closed decisions

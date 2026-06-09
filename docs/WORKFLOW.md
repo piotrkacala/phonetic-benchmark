@@ -35,6 +35,62 @@ When the current task is an implementation run, the model must:
 The rule against a canonical starter shell applies to the shared baseline package.
 It does not prohibit implementation code in benchmark submissions.
 
+## Dependency Security And Runner Policy
+
+Dependency installation, project scripts, build, test, and preview commands are untrusted execution
+for benchmark purposes.
+
+The detailed policy lives in `docs/DEPENDENCY_SECURITY.md`. This workflow document only describes
+how operators and implementation models should use that policy during a run.
+
+Current operating assumptions:
+- npm is the first supported package manager for official evaluation
+- build, test, and preview may use network access
+- the main security boundary is credential and host filesystem isolation, not offline execution
+- model instructions help compliance but are not the enforcement boundary
+- official final evaluation must use the controlled runner
+
+Implementation models may add ordinary npm dependencies within policy. If a dependency or script is
+rejected during a run, the model may correct the submitted state and retry. The final repository
+state and official runner result are authoritative.
+
+## Operator Readiness Checks
+
+Readiness checks are operator evidence, not the official controlled runner. The public benchmark
+package does not require implementation models to run evaluator tooling before or during a
+submission.
+
+Useful readiness checks include repository cleanliness, expected benchmark files, common
+credential-file names, `.npmrc`, runtime availability, registry reachability, isolation posture, and
+final-mode `package.json` policy signals. Readiness checks do not replace the official flow that
+generates a fresh lockfile, validates dependency metadata, installs dependencies, runs tests, builds
+the app, and checks preview readiness.
+
+The isolation checks are operator evidence, not a complete development sandbox. In particular, a
+model or agent user that belongs to the `docker` group is reported as a development isolation risk
+because that user may be able to mount host paths or reach host resources. This warning does not
+replace the official final runner result, and it is not by itself a dependency-policy failure.
+
+The common credential-file scan is most useful before a model run starts, because files such as
+`.env`, `.env.local`, `.netrc`, `id_rsa`, `id_ed25519`, or generic `credentials` files should not be
+present in the benchmark workspace given to the model. Operators should treat those findings as
+workspace hygiene failures to fix before implementation begins. The official runner still
+hard-rejects submitted `.npmrc` files as package policy, while the broader credential-file scan is
+readiness/operator evidence rather than a substitute for runner isolation.
+
+Operators may run private readiness tooling before a model run starts and again before final
+evaluation. Passing readiness checks are useful evidence, but they do not replace official runner
+evidence.
+
+Simple operator flow:
+- prepare a clean baseline checkout before giving the workspace to a model
+- remove any reported credential-like files before the run begins
+- record any reported development isolation risks, such as uncontrolled Docker or broad host
+  filesystem access
+- after the submission is complete, run evaluator-controlled readiness checks when available
+- run the evaluator-controlled final runner outside the mutable submission workspace
+- record readiness and runner results as evaluation evidence
+
 ## Git Policy
 
 The repository must be under git.
@@ -169,8 +225,45 @@ Every completed implementation run must leave:
 - `docs/ai/IMPLEMENTATION_REPORT.md` with process evidence, visible model/provider settings,
   verification results, open decisions, and git-commit status
 
+When the controlled runner exists, the implementation report should include a short summary of the
+final runner result or a path to the runner artifact. It should not need to embed full raw logs.
+
 If a model cannot see a provider or runtime setting, it should write `not exposed by interface`
 instead of guessing.
+
+## Controlled Final Evaluation Flow
+
+Official evaluation must run from a clean dependency state through an evaluator-controlled runner.
+The runner, wrapper, and image must come from the benchmark evaluator environment, not from mutable
+submission files.
+
+For container-based MVP evaluation, the operator should run the wrapper from an evaluator-controlled
+checkout or published runner image and pass the submitted project path to that wrapper. The wrapper
+should copy the submitted project to a disposable writable workspace before mounting it in the
+container, so generated lockfiles, `node_modules`, and other runner artifacts do not mutate the
+original submission evidence.
+
+The official flow is:
+
+1. validate dependency policy against the final `package.json`
+2. generate a fresh `package-lock.json` with lifecycle scripts disabled
+3. validate the generated lockfile
+4. remove or ignore existing `node_modules` and generated dependency artifacts
+5. install with npm using lifecycle scripts disabled
+6. run the documented test command when present
+7. run the documented build command when present
+8. run a bounded preview readiness check
+9. when manual review is needed, start the documented preview or dev server in serve mode
+
+The runner may allow network access during build, test, and preview. It must not expose the host
+home directory, credentials, broad host filesystem paths, Docker socket, or secret environment
+variables to submitted project commands. If the model had uncontrolled Docker or host-level access
+during implementation, official evaluation should use a VM, disposable host, or equivalent
+operator-controlled environment.
+
+Runner rejection during the implementation run is feedback the model may fix. Final dependency
+policy violations are `Contract-Failing`; inability to install or start through the controlled
+runner is `Unrunnable`.
 
 ## Fairness Principle
 

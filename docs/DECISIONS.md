@@ -453,6 +453,41 @@ Implications:
 - incorrect attribution dates, mismatched decision notes, and broken declared test workflows are
   contract failures
 
+## Decision 24: Dependency Installation And Project Scripts Are Untrusted Execution
+
+Status:
+- accepted
+
+Decision:
+- dependency installation, project scripts, build, test, and preview are treated as untrusted
+  execution during benchmark evaluation
+- `docs/DEPENDENCY_SECURITY.md` is the detailed dependency security policy reference
+- npm is the first supported package manager for official evaluation
+- model instructions are not the enforcement boundary
+- official final evaluation must use the controlled runner
+- readiness checks are operator evidence, not the official controlled runner
+
+Why:
+- implementation models are expected to add `package.json`, dependencies, lockfiles, and runnable
+  project scripts
+- install and project commands may execute code from dependencies or from the submitted project
+- build, test, and preview may legitimately need network access, so the benchmark's main security
+  boundary is credential and host filesystem isolation rather than offline execution
+- host credentials, private home-directory files, Docker socket access, and secret environment
+  variables must not be exposed to submitted project commands
+- reviewer interpretation of model intent is weaker than validating the final repository state in a
+  controlled environment
+
+Implications:
+- rejected dependencies during an implementation run may be corrected by the model
+- final dependency policy violations are `Contract-Failing`
+- inability to install or start through the controlled runner is `Unrunnable`
+- runner evidence is primary review evidence once the official runner exists
+- dependency risk that does not trigger a hard policy failure may still affect technical judgment
+  and documentation or process scoring for `Comparable` submissions
+- the benchmark remains framework-neutral; the policy constrains dependency sources and execution
+  isolation, not the frontend framework
+
 ## Currently Open
 
 The following topics remain intentionally open in the current benchmark version:

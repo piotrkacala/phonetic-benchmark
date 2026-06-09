@@ -61,3 +61,11 @@ This repository keeps its own local workflow bootstrap:
 - `workflow.md`
 
 These files are copied and adapted locally so the repo stays self-contained.
+
+## Dependency Security Evaluation
+
+Official evaluation should use evaluator-controlled tooling rather than scripts shipped by an
+implementation submission. The dependency security policy requires a fresh lockfile, registry-only
+package-source validation, lifecycle scripts disabled during install, npm release-age protection,
+and install/build/test/preview execution in an isolated environment that does not expose host
+credentials or the host home directory. The full policy lives in `docs/DEPENDENCY_SECURITY.md`.

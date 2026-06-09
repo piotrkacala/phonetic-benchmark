@@ -13,6 +13,8 @@ In an implementation run, the expected work is to add a runnable web application
 - benchmark docs come before code
 - `docs/` holds durable benchmark docs
 - `docs/ai/` holds agent-operational artifacts
+- detailed implementation-run workflow lives in `docs/WORKFLOW.md`
+- dependency and runner security policy lives in `docs/DEPENDENCY_SECURITY.md`
 
 ## Recommended Docs Layout
 
@@ -21,9 +23,11 @@ docs/
   OVERVIEW.md
   REQUIREMENTS.md
   ALLOWED_FREEDOMS.md
+  WORKFLOW.md
   TEST_CASES.md
   EVALUATION.md
   DECISIONS.md
+  DEPENDENCY_SECURITY.md
   ai/
     workflow/
     tasks/
@@ -41,9 +45,11 @@ When documents disagree, use this order:
 3. `DECISIONS.md`
 4. `TEST_CASES.md`
 5. `ALLOWED_FREEDOMS.md`
-6. `EVALUATION.md`
-7. code
-8. chat history
+6. `DEPENDENCY_SECURITY.md`
+7. `WORKFLOW.md`
+8. `EVALUATION.md`
+9. code
+10. chat history
 
 ## Phase 1: Clarify The Benchmark
 
@@ -103,6 +109,9 @@ When the package is stable, make sure the workflow documents:
 - what the model is allowed to change
 - what commands are used to validate outputs
 - how results are recorded
+
+Detailed run rules belong in `docs/WORKFLOW.md`. Dependency and runner security rules belong in
+`docs/DEPENDENCY_SECURITY.md`.
 
 Implementation-run rule:
 - the model is allowed and expected to add application code, package metadata, tests, and run

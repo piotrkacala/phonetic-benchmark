@@ -31,6 +31,7 @@ Primary evidence should come from:
 - `docs/ai/IMPLEMENTATION_REPORT.md`
 - automated test artifacts
 - documented run commands
+- controlled runner evidence when dependency evaluation is available
 - the observable application behavior
 
 Chat history may help explain intent, but it should not be required to understand the submission.
@@ -46,6 +47,22 @@ That means:
 - visual design should be judged mainly for clarity and consistency, not for personal taste
 - process quality should be judged from repository evidence, not from assumed intent
 
+## Dependency Policy Evidence
+
+Use `docs/DEPENDENCY_SECURITY.md` as the detailed dependency security policy reference.
+
+Official evaluation must use an evaluator-controlled runner, wrapper, or published runner image
+rather than tooling copied from a mutable implementation submission.
+
+The runner result is primary evidence for dependency installation, build, test, and preview because
+dependency installation and project scripts are treated as untrusted execution.
+Operator readiness checks are useful evidence, but they are not the official runner and do not
+replace final runner results.
+
+Rejected dependencies during an implementation run are not final failures if the model corrects the
+final submitted state. Review the final repository and official runner result rather than the
+model's stated intent.
+
 ## Layer 1: Contract Verification
 
 Use `docs/TEST_CASES.md` as the contract checklist.
@@ -57,6 +74,10 @@ A submission should be marked:
 Use this status when:
 - the reviewer cannot access the implemented app behavior at all
 - the project cannot be installed or started because the Node.js-based workflow is missing or broken
+- the project cannot be installed or started through the controlled runner once official runner
+  evaluation is available
+- the project requires a non-npm package manager and cannot install or start through the official
+  npm runner
 - the basic submission contract is missing in a way that prevents the reviewer from determining a
   viable entry point, for example no `package.json`
 - the app fails before the reviewer can exercise its implemented behavior
@@ -77,6 +98,8 @@ Use this status when:
 - required submission artifacts such as `README.md` or `docs/ai/IMPLEMENTATION_REPORT.md` are
   missing or materially incomplete
 - a documented test command is present but does not complete successfully
+- final dependency policy violations are present in `package.json`, dependency metadata, the
+  generated lockfile, or runner validation output
 - documented decisions for open product questions do not match the implemented UI behavior
 - the required implementation date is generated dynamically rather than preserved as a fixed date
   for the run
@@ -86,6 +109,7 @@ Use this status when:
 Use this status when:
 - the submission is runnable
 - the contract tests pass well enough to compare quality and judgment across implementations
+- controlled runner checks pass when official runner evaluation is available
 
 Only `Comparable` submissions should receive the full comparative score.
 
@@ -209,12 +233,15 @@ Low score:
 
 1. Read the submission's run instructions.
 2. Read `docs/ai/IMPLEMENTATION_REPORT.md`.
-3. Install and run the project using the documented Node.js workflow.
-4. Verify the contract behaviors from `docs/TEST_CASES.md`.
-5. Assign a contract-verification status.
-6. If the submission is comparable, assign `0-5` scores for each weighted dimension.
-7. Calculate the weighted total.
-8. Record notable strengths, weaknesses, and important self-closed decisions.
+3. Run evaluator-controlled readiness checks when available and record the result as readiness
+   evidence.
+4. Run the official controlled runner from evaluator-controlled tooling, not from the submitted
+   project.
+5. Verify the contract behaviors from `docs/TEST_CASES.md`.
+6. Assign a contract-verification status.
+7. If the submission is comparable, assign `0-5` scores for each weighted dimension.
+8. Calculate the weighted total.
+9. Record notable strengths, weaknesses, runner evidence, and important self-closed decisions.
 
 ## Handling Open Questions
 
@@ -233,6 +260,7 @@ A reviewer should produce at minimum:
 - contract-verification status
 - weighted score if comparable
 - must-fix findings or contract failures
+- controlled runner result or a note that the official runner was not available
 - notable strengths
 - notable process or documentation observations
 
