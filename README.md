@@ -56,7 +56,6 @@ Each entry uses the neutral field names `symbol` and `codeword`.
 
 This repository keeps its own local workflow bootstrap:
 - `AGENTS.md`
-- `CODEX.md`
 - `agent-collaboration-defaults.md`
 - `workflow.md`
 

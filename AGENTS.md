@@ -89,8 +89,3 @@ Before considering a benchmark-structure change done:
 - confirm the canonical data still exists in `benchmark-data/alphabets.json`
 - confirm repo instructions do not reference external local paths
 - confirm durable decisions are reflected in markdown, not only in chat
-
-## Agent-Specific Notes
-
-If thin adapter files are used, keep them short and point them back here:
-- `CODEX.md`
